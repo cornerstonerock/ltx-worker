@@ -175,7 +175,9 @@ def build_workflow(p):
 
     if p["image_url"]:
         # Image-to-video: preprocess the start frame and inject it into the
-        # video latent in place (strength ~0.7 keeps identity, allows motion).
+        # video latent in place. Strength 0.9 locks identity hard; the model
+        # still gets motion from the prompt. 0.7 caused visible character
+        # drift in PulseClone Character Lock tests.
         wf["loadimg"] = {
             "class_type": "LoadImage",
             "inputs": {"image": p["_image_filename"]},
@@ -190,7 +192,7 @@ def build_workflow(p):
                 "vae": ["vae_video", 0],
                 "image": ["preprocess", 0],
                 "latent": ["latent_video", 0],
-                "strength": 0.7,
+                "strength": 0.9,
                 "bypass": False,
             },
         }
