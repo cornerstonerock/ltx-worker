@@ -88,8 +88,8 @@ def validate(event_input):
     prompt = event_input.get("prompt")
     if not isinstance(prompt, str) or not prompt.strip():
         raise WorkerError("prompt is required and must be a non-empty string")
-    if len(prompt) > 2000:
-        raise WorkerError("prompt must be <= 2000 characters")
+    if len(prompt) > 8000:
+        raise WorkerError("prompt must be <= 8000 characters")
 
     image_url = event_input.get("image_url")
     if image_url is not None and not isinstance(image_url, str):
